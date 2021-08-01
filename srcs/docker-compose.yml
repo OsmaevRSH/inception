@@ -39,6 +39,12 @@ services:
       context: ./requirements/bonus/ftp
       dockerfile: Dockerfile
     container_name: ftp-container
+    ports:
+      - '20:20'
+      - '21:21'
+      - '21000:21000'
+    volumes:
+      - ./requirements/wordpress/tools/wordpress/:/home/ltheresi/
     restart: always
 
   redis:
@@ -60,8 +66,6 @@ services:
       context: ./requirements/bonus/influx
       dockerfile: Dockerfile
     container_name: influx-container
-    volumes:
-      - ./influx:/var/lib/influx
     restart: always
 
   grafana:
