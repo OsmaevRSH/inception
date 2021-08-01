@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    container_name: nginx-container
+    volumes:
+      - ./requirements/wordpress/tools/wordpress/:/var/lib/wordpress/
+      - ./requirements/bonus/adminer/tools/adminer/:/var/lib/adminer/
+      - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - '${NGINX_HOST_PORT}:${NGINX_CONTAINER_PORT}'
+    restart: always
+
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    container_name: mariadb-container
+    ports:
+      - '${MARIADB_HOST_PORT}:${MARIADB_CONTAINER_PORT}'
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    restart: always
+
+  wordpress:
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    volumes:
+      - ./requirements/wordpress/tools/wordpress/:/var/lib/wordpress
+    container_name: wordpress-container
+    restart: always
+
+  ftp:
+    build:
+      context: ./requirements/bonus/ftp
+      dockerfile: Dockerfile
+    container_name: ftp-container
+    restart: always
+
+  redis:
+    build:
+      context: ./requirements/bonus/redis
+      dockerfile: Dockerfile
+    container_name: redis-container
+    restart: always
+
+  adminer:
+    build:
+      context: ./requirements/bonus/adminer
+      dockerfile: Dockerfile
+    container_name: adminer-container
+    restart: always
+
+  influx:
+    build:
+      context: ./requirements/bonus/influx
+      dockerfile: Dockerfile
+    container_name: influx-container
+    volumes:
+      - ./influx:/var/lib/influx
+    restart: always
+
+  grafana:
+    build:
+      context: ./requirements/bonus/grafana
+      dockerfile: Dockerfile
+    container_name: grafana-container
+    ports:
+      - '3000:3000'
+    restart: always
+
+  telegraf:
+    build:
+      context: ./requirements/bonus/telegraf
+      dockerfile: Dockerfile
+    container_name: telegraf-container
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
