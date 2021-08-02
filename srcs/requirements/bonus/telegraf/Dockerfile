@@ -1,7 +1,6 @@
 FROM alpine:latest
 
 RUN apk update
-#RUN apk add telegraf
 ADD https://dl.influxdata.com/telegraf/releases/telegraf-1.15.3_linux_amd64.tar.gz /etc/
 RUN tar -xzf /etc/telegraf-1.15.3_linux_amd64.tar.gz -C /etc/ ; rm -rf /etc/telegraf-1.15.3_linux_amd64.tar.gz
 RUN mv /etc/telegraf-1.15.3 /telegraf && cp -r telegraf/* / && rm -rf /telegraf

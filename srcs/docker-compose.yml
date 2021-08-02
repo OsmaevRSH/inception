@@ -13,6 +13,8 @@ services:
     ports:
       - '${NGINX_HOST_PORT}:${NGINX_CONTAINER_PORT}'
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   mariadb:
     build:
@@ -24,6 +26,8 @@ services:
     volumes:
       - ./mariadb:/var/lib/mysql
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   wordpress:
     build:
@@ -33,6 +37,8 @@ services:
       - ./requirements/wordpress/tools/wordpress/:/var/lib/wordpress
     container_name: wordpress-container
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   ftp:
     build:
@@ -40,12 +46,14 @@ services:
       dockerfile: Dockerfile
     container_name: ftp-container
     ports:
-      - '20:20'
-      - '21:21'
-      - '21000:21000'
+      - '${FTP_20_HOST}:${FTP_20_CONTAINER}'
+      - '${FTP_21_HOST}:${FTP_21_CONTAINER}'
+      - '${FTP_21000_HOST}:${FTP_21000_CONTAINER}'
     volumes:
       - ./requirements/wordpress/tools/wordpress/:/home/ltheresi/
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   redis:
     build:
@@ -53,6 +61,8 @@ services:
       dockerfile: Dockerfile
     container_name: redis-container
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   adminer:
     build:
@@ -60,6 +70,8 @@ services:
       dockerfile: Dockerfile
     container_name: adminer-container
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   influx:
     build:
@@ -67,6 +79,8 @@ services:
       dockerfile: Dockerfile
     container_name: influx-container
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   grafana:
     build:
@@ -74,8 +88,10 @@ services:
       dockerfile: Dockerfile
     container_name: grafana-container
     ports:
-      - '3000:3000'
+      - '${GRAFANA_HOST_PORT}:${GRAFANA_CONTAINER_PORT}'
     restart: always
+    networks:
+      - 'ltheresi-inception'
 
   telegraf:
     build:
@@ -85,3 +101,20 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
+    networks:
+      - 'ltheresi-inception'
+
+  python-cgi:
+    build:
+      context: ./requirements/bonus/pythonCGI
+      dockerfile: Dockerfile
+    container_name: pythonCGI-container
+    ports:
+      - '${PYTHON_CGI_HOST_PORT}:${PYTHON_CGI_CONTAINER_PORT}'
+    restart: always
+    networks:
+      - 'ltheresi-inception'
+
+networks:
+  ltheresi-inception:
+    driver: bridge
