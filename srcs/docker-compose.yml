@@ -8,8 +8,6 @@ services:
     container_name: nginx-container
     volumes:
       - ./requirements/wordpress/tools/wordpress/:/var/lib/wordpress/
-      - ./requirements/bonus/adminer/tools/:/var/lib/adminer/
-      - ./requirements/nginx/nginx.conf:/etc/nginx/nginx.conf
     ports:
       - '${NGINX_HOST_PORT}:${NGINX_CONTAINER_PORT}'
     restart: always
