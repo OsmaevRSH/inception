@@ -126,4 +126,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/ruslanosmaev/data/wordpress_data
+      device: /${START_DIR}/${SCHOOL_USER}/data/wordpress_data
