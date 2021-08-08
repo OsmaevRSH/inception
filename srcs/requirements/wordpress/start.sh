@@ -1,4 +1,3 @@
-# rm -rf /var/lib/wordpress/*
 mv /wordpress/* /var/lib/wordpress/
 rm -rf /wordpress
 chown -R www-data:www-data /var/lib/*

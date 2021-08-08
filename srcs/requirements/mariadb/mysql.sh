@@ -9,6 +9,7 @@ echo "CREATE DATABASE IF NOT EXISTS wordpress;" | mariadb -p"${DB_ROOT_PASS}"
 echo "CREATE USER '${DB_MY_LOGIN}'@'localhost' IDENTIFIED BY '${DB_MY_PASS}';" | mariadb -p"${DB_ROOT_PASS}"
 echo "GRANT ALL PRIVILEGES ON wordpress.* TO '${DB_MY_LOGIN}'@'%' IDENTIFIED BY '${DB_MY_PASS}' WITH GRANT OPTION;" | mariadb -p"${DB_ROOT_PASS}"
 echo "FLUSH PRIVILEGES;" | mariadb -p"${DB_ROOT_PASS}"
+
 mariadb -p"${DB_ROOT_PASS}" < wordpress.sql
 rc-service mariadb stop
 /usr/bin/mysqld_safe --datadir='/var/lib/mysql'
