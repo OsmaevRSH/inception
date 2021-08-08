@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: nginx-container
     volumes:
-      - wordpress_data:/var/lib/wordpress/
+      - wordpress_data:/var/lib/wordpress
     ports:
       - '${NGINX_HOST_PORT}:${NGINX_CONTAINER_PORT}'
     restart: always
@@ -48,7 +48,7 @@ services:
       - '${FTP_21_HOST}:${FTP_21_CONTAINER}'
       - '${FTP_21000_HOST}:${FTP_21000_CONTAINER}'
     volumes:
-      - wordpress_data:/home/ltheresi/
+      - wordpress_data:/home/ltheresi
     restart: always
     networks:
       - 'ltheresi-inception'
