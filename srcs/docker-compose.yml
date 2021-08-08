@@ -6,6 +6,9 @@ services:
       context: ./requirements/nginx
       dockerfile: Dockerfile
     container_name: nginx-container
+    environment:
+      MY_LOGIN: '${MY_LOGIN}'
+      MY_PASS: '${MY_PASS}'
     volumes:
       - wordpress_data:/var/lib/wordpress
     ports:
@@ -19,6 +22,11 @@ services:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
     container_name: mariadb-container
+    environment:
+      DB_ROOT_LOGIN: '${DB_ROOT_LOGIN}'
+      DB_ROOT_PASS: '${DB_ROOT_PASS}'
+      DB_MY_LOGIN: '${DB_MY_LOGIN}'
+      DB_MY_PASS: '${DB_MY_PASS}'
     ports:
       - '${MARIADB_HOST_PORT}:${MARIADB_CONTAINER_PORT}'
     volumes:
@@ -43,6 +51,9 @@ services:
       context: ./requirements/bonus/ftp
       dockerfile: Dockerfile
     container_name: ftp-container
+    environment:
+      MY_LOGIN: '${MY_LOGIN}'
+      MY_PASS: '${MY_PASS}'
     ports:
       - '${FTP_20_HOST}:${FTP_20_CONTAINER}'
       - '${FTP_21_HOST}:${FTP_21_CONTAINER}'
@@ -115,16 +126,15 @@ services:
 
 networks:
   ltheresi-inception:
-    driver: bridge
 
 volumes:
   mariadb_data:
     name: mariadb_data
-#    driver: local
-#    driver_opts:
-#        type: none
-#        o: bind
-#        device: /${START_DIR}/${SCHOOL_USER}/data/mariadb_data
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: /${START_DIR}/${SCHOOL_USER}/data/mariadb_data
 
   wordpress_data:
     name: wordpress_data

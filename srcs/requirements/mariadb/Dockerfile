@@ -10,7 +10,7 @@ RUN mkdir -p /auth_pam_tool_dir/auth_pam_tool
 RUN mkdir -p /run/openrc/
 RUN touch /run/openrc/softlevel
 COPY ./conf /etc/my.cnf
-COPY ./create.sql /
+COPY ./wordpress.sql /
 COPY mysql.sh /
 
 EXPOSE 3306
